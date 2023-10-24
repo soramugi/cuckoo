@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ReminderController;
 use App\Http\Controllers\TopController;
 use Illuminate\Support\Facades\Route;
 
@@ -15,3 +16,4 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [TopController::class, 'index'])->name('top.index');
+Route::resource('reminders', ReminderController::class);
