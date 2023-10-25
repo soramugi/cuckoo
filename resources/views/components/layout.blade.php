@@ -11,6 +11,11 @@
 </head>
 
 <body class="h-full">
+
+    @if (session('success'))
+        <x-notification.success />
+    @endif
+
     <div x-data="{ open: false }">
 
         <!-- Open sidebar for smartphone -->
@@ -56,12 +61,15 @@
 
                 <div class="flex flex-1 gap-x-4 self-stretch lg:gap-x-6">
 
-                    {{-- <x-layout.search /> --}}
+                    {{--
+                    <x-layout.search /> --}}
 
                     <div class="flex items-center gap-x-4 lg:gap-x-6">
-                        {{-- <x-layout.notification /> --}}
+                        {{--
+                        <x-layout.notification /> --}}
 
-                        {{-- <!-- Separator -->
+                        {{--
+                        <!-- Separator -->
                         <div class="hidden lg:block lg:h-6 lg:w-px lg:bg-gray-900/10" aria-hidden="true"></div>
 
                         <x-layout.profile /> --}}
