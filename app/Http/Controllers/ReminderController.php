@@ -12,7 +12,11 @@ class ReminderController extends Controller
      */
     public function index()
     {
-        return view('reminders.index');
+        $reminders = Reminder::query()->paginate();
+
+        return view('reminders.index', [
+            'reminders' => $reminders,
+        ]);
     }
 
     /**
@@ -28,7 +32,26 @@ class ReminderController extends Controller
      */
     public function store(Request $request)
     {
-        return back()->with('success', '作成完了');
+        $request->validate([
+            'title' => 'required|string',
+            'description' => 'required|string',
+            'time' => 'required',
+            'to' => 'required|email',
+            'type' => 'required',
+            'day' => 'required_if:type,month',
+            'week' => 'required_if:type,week',
+        ]);
+
+        $data = $request->only(['title', 'description', 'time', 'to']);
+        if ($request->get('type') === 'month') {
+            $data = array_merge($data, $request->only('day'));
+        } else {
+            $data = array_merge($data, $request->only('week'));
+        }
+
+        $reminder = Reminder::create($data);
+
+        return redirect()->to(route('reminders.show', [$reminder]))->with('success', '作成完了');
     }
 
     /**
