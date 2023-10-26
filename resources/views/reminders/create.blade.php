@@ -6,6 +6,7 @@
                 通知内容の新規作成
             </p>
         </div>
+
         <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
 
             @if ($errors->any())

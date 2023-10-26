@@ -80,6 +80,26 @@ class ReminderController extends Controller
      */
     public function update(Request $request, Reminder $reminder)
     {
+        $request->validate([
+            'title' => 'required|string',
+            'description' => 'required|string',
+            'time' => 'required',
+            'to' => 'required|email',
+            'type' => 'required',
+            'day' => 'required_if:type,month',
+            'week' => 'required_if:type,week',
+        ]);
+
+        $data = $request->only(['title', 'description', 'time', 'to']);
+        if ($request->get('type') === 'month') {
+            $data = array_merge($data, $request->only('day'));
+        } else {
+            $data = array_merge($data, $request->only('week'));
+        }
+        $data = array_merge($data, ['compleded_at' => now()]);
+
+        $reminder->update($data);
+
         return back()->with('success', '更新完了');
     }
 
@@ -88,6 +108,8 @@ class ReminderController extends Controller
      */
     public function destroy(Reminder $reminder)
     {
+        $reminder->delete();
+
         return redirect()->to(route('reminders.index'))->with('success', '削除が完了しました');
     }
 }

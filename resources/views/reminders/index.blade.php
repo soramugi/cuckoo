@@ -31,7 +31,7 @@
                                 Next
                             </th>
                             <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-0">
-                                <span class="sr-only">Edit</span>
+                                <span class="sr-only">Show</span>
                             </th>
                         </tr>
                     </thead>
@@ -41,7 +41,7 @@
                             <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">
                                 {{ $reminder->repeat_text }} {{ $reminder->time }}
                             </td>
-                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900">
                                 {{ $reminder->title }}
                             </td>
                             <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
@@ -49,9 +49,9 @@
                             </td>
                             <td
                                 class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
-                                <a href="{{ route('reminders.edit', [$reminder]) }}"
+                                <a href="{{ route('reminders.show', [$reminder]) }}"
                                     class="text-indigo-600 hover:text-indigo-900">
-                                    Edit
+                                    Show
                                     <span class="sr-only">{{ $reminder->title }}</span>
                                 </a>
                             </td>
