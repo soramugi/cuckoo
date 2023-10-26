@@ -48,6 +48,7 @@ class ReminderController extends Controller
         } else {
             $data = array_merge($data, $request->only('week'));
         }
+        $data = array_merge($data, ['compleded_at' => now()]);
 
         $reminder = Reminder::create($data);
 

@@ -40,4 +40,32 @@ class Reminder extends Model
             },
         );
     }
+
+    protected function nextSend(): Attribute
+    {
+        return Attribute::make(
+            get: function (mixed $value, array $attributes) {
+                [$hour, $min] = explode(':', $attributes['time']);
+
+                $date = now();
+                $date->hour = $hour;
+                $date->minute = $min;
+                if (!is_null($attributes['week'])) {
+                    $date->weekday($attributes['week']);
+                    if (!is_null($attributes['compleded_at']) && $date < $attributes['compleded_at']) {
+                        $date->addWeek();
+                    }
+                }
+                if (!is_null($attributes['day'])) {
+                    $date->day = $attributes['day'];
+                    if (!is_null($attributes['compleded_at']) && $date < $attributes['compleded_at']) {
+                        $date->addMonth();
+                    }
+                }
+
+                return $date;
+            },
+        );
+    }
+
 }
