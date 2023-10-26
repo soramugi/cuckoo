@@ -50,9 +50,9 @@ class ReminderController extends Controller
         }
         $data = array_merge($data, ['compleded_at' => now()]);
 
-        $reminder = Reminder::create($data);
+        Reminder::create($data);
 
-        return redirect()->to(route('reminders.show', [$reminder]))->with('success', '作成完了');
+        return redirect()->to(route('reminders.index'))->with('success', '作成完了');
     }
 
     /**
