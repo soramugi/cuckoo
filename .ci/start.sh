@@ -7,8 +7,7 @@ ROOT=$(cd $CURRENT/../;pwd)
 
 cd $ROOT
 
-echo '--- START CI ---'
-
-./vendor/bin/pint --test
-
-php artisan test
+docker-compose run laravel.test \
+    composer install \
+    ./vendor/bin/pint --test \
+    php artisan test
