@@ -9,6 +9,5 @@ cd $ROOT
 
 composer install
 
-./vendor/bin/sail shell \
-    ./vendor/bin/pint --test && \
-    php artisan test
+./vendor/bin/pint --test
+php artisan test
