@@ -7,7 +7,8 @@ ROOT=$(cd $CURRENT/../;pwd)
 
 cd $ROOT
 
-docker-compose run laravel.test \
-    composer install \
-    ./vendor/bin/pint --test \
+composer install
+
+./vendor/bin/sail shell \
+    ./vendor/bin/pint --test && \
     php artisan test
