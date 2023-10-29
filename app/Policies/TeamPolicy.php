@@ -27,11 +27,16 @@ class TeamPolicy
     }
 
     /**
-     * Determine whether the user can create models.
+     * 1つでも管理者権限があればチーム作成が可能
      */
     public function create(User $user): bool
     {
-        return true;
+        return $user->allTeams()
+            ->map(function ($team) use ($user) {
+                return $user->ownsTeam($team);
+            })
+            ->filter(fn ($bool) => $bool)
+            ->count() > 0;
     }
 
     /**

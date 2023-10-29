@@ -2,6 +2,7 @@
 
 namespace App\Actions\Jetstream;
 
+use App\Mail\UserInvitation;
 use App\Models\Team;
 use App\Models\User;
 use Closure;
@@ -33,28 +34,31 @@ class InviteTeamMember implements InvitesTeamMembers
 
         InvitingTeamMember::dispatch($team, $email, $role);
 
-        // ユーザー作成
-        $makeUser = User::where('email', $email)->first();
-        if (! $makeUser) {
-            $data = explode('@', $email);
-            $makeUser = User::create([
-                'name' => $data[0],
-                'email' => $email,
-                'password' => Hash::make(Str::uuid()),
-            ]);
-            // TODO: ここは削除。チーム招待のメールでパスワードリセットのURLも記載する、30分制限は変更できる?
-            Password::broker(config('fortify.passwords'))->sendResetLink([
-                Fortify::email() => $makeUser->email,
-            ]);
-        }
-
         $invitation = $team->teamInvitations()->create([
             'email' => $email,
             'role' => $role,
         ]);
 
-        // TODO: ユーザーが新規作成であればパスワード設定のURLも記載するように変更
-        Mail::to($email)->send(new TeamInvitation($invitation));
+        if (User::where('email', $email)->whereNotNull('email_verified_at')->first()) {
+            Mail::to($email)->send(new TeamInvitation($invitation));
+
+            return;
+        }
+
+        // ユーザー新規作成
+        $data = explode('@', $email);
+        User::firstOrCreate([
+            'email' => $email,
+        ], [
+            'name' => $data[0],
+            'email' => $email,
+            'password' => Hash::make(Str::uuid()),
+        ]);
+        Password::broker(config('fortify.passwords'))->sendResetLink([
+            Fortify::email() => $email,
+        ], function (User $user, string $token) use ($invitation) {
+            Mail::to($user->email)->send(new UserInvitation($invitation, $token));
+        });
     }
 
     /**

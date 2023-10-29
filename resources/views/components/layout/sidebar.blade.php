@@ -39,7 +39,7 @@
                 </ul>
             </li>
 
-            @if (Laravel\Jetstream\Jetstream::hasTeamFeatures())
+            @if (Laravel\Jetstream\Jetstream::hasTeamFeatures() && $user->currentTeam)
             <li>
 
                 <div class="text-xs font-semibold leading-6 text-gray-400">
@@ -48,7 +48,7 @@
 
                 <ul role="list" class="-mx-2 space-y-1">
                     <li>
-                        <a href="{{ route('teams.show', Auth::user()->currentTeam->id) }}"
+                        <a href="{{ route('teams.show', $user->currentTeam->id) }}"
                             class="{{ request()->routeIs('teams.show') ? 'bg-gray-50 text-indigo-600' : 'text-gray-700 hover:text-indigo-600 hover:bg-gray-50' }} group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                 stroke="currentColor" class="w-6 h-6">
@@ -75,7 +75,7 @@
 
                 </ul>
 
-                @if (Auth::user()->allTeams()->count() > 1)
+                @if ($user->allTeams()->count() > 1)
                 <div class="border-t border-gray-200 my-2"></div>
 
                 <div class="text-xs font-semibold leading-6 text-gray-400">
@@ -83,7 +83,7 @@
                 </div>
                 <ul role="list" class="-mx-2 mt-2 space-y-1">
 
-                    @foreach (Auth::user()->allTeams() as $team)
+                    @foreach ($user->allTeams() as $team)
                     <li>
                         <form method="POST" action="{{ route('current-team.update') }}" x-data>
                             @method('PUT')
@@ -93,7 +93,7 @@
                             <!-- Current: "bg-gray-50 text-indigo-600", Default: "text-gray-700 hover:text-indigo-600 hover:bg-gray-50" -->
                             <button type="submit"
                                 class="text-gray-700 hover:text-indigo-600 hover:bg-gray-50 group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold">
-                                @if (Auth::user()->isCurrentTeam($team))
+                                @if ($user->isCurrentTeam($team))
                                 <svg class="mr-2 h-5 w-5 text-green-400" xmlns="http://www.w3.org/2000/svg" fill="none"
                                     viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round"
