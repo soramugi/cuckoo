@@ -7,9 +7,13 @@ use App\Models\User;
 use Closure;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
+use Laravel\Fortify\Fortify;
 use Laravel\Jetstream\Contracts\InvitesTeamMembers;
 use Laravel\Jetstream\Events\InvitingTeamMember;
 use Laravel\Jetstream\Jetstream;
@@ -29,11 +33,27 @@ class InviteTeamMember implements InvitesTeamMembers
 
         InvitingTeamMember::dispatch($team, $email, $role);
 
+        // ユーザー作成
+        $makeUser = User::where('email', $email)->first();
+        if (! $makeUser) {
+            $data = explode('@', $email);
+            $makeUser = User::create([
+                'name' => $data[0],
+                'email' => $email,
+                'password' => Hash::make(Str::uuid()),
+            ]);
+            // TODO: ここは削除。チーム招待のメールでパスワードリセットのURLも記載する、30分制限は変更できる?
+            Password::broker(config('fortify.passwords'))->sendResetLink([
+                Fortify::email() => $makeUser->email,
+            ]);
+        }
+
         $invitation = $team->teamInvitations()->create([
             'email' => $email,
             'role' => $role,
         ]);
 
+        // TODO: ユーザーが新規作成であればパスワード設定のURLも記載するように変更
         Mail::to($email)->send(new TeamInvitation($invitation));
     }
 
@@ -67,8 +87,8 @@ class InviteTeamMember implements InvitesTeamMembers
                 }),
             ],
             'role' => Jetstream::hasRoles()
-                            ? ['required', 'string', new Role]
-                            : null,
+                ? ['required', 'string', new Role]
+                : null,
         ]);
     }
 
