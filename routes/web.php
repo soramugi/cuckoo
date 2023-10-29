@@ -17,3 +17,13 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [TopController::class, 'index'])->name('top.index');
 Route::resource('reminders', ReminderController::class);
+
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified',
+])->group(function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
+});
