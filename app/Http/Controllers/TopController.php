@@ -10,4 +10,9 @@ class TopController extends Controller
     {
         return view('top.index');
     }
+
+    public function dashboard(Request $request)
+    {
+        return view('top.dashboard');
+    }
 }

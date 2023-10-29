@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ReminderController;
+use App\Http\Controllers\SetupController;
 use App\Http\Controllers\TopController;
 use Illuminate\Support\Facades\Route;
 
@@ -15,15 +16,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [TopController::class, 'index'])->name('top.index');
-Route::resource('reminders', ReminderController::class);
+Route::get('setup', [SetupController::class, 'create'])->name('setup.create');
+Route::post('setup', [SetupController::class, 'store'])->name('setup.store');
 
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+    Route::get('/', [TopController::class, 'index'])->name('top.index');
+    Route::get('dashboard', [TopController::class, 'dashboard'])->name('dashboard');
+
+    Route::resource('reminders', ReminderController::class);
 });
