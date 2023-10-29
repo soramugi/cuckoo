@@ -1,23 +1,25 @@
-<x-layout>
+<x-app-layout>
 
-    <div class="sm:flex sm:items-center">
-        <div class="sm:flex-auto">
-            <h1 class="text-base font-semibold leading-6 text-gray-900">Reminder 詳細</h1>
-            <p class="mt-2 text-sm text-gray-700">
-                登録済みの通知詳細
-            </p>
-        </div>
+    <x-slot name="header">
+        <div class="sm:flex sm:items-center">
+            <div class="sm:flex-auto">
+                <h1 class="text-base font-semibold leading-6 text-gray-900">Reminder 詳細</h1>
+                <p class="mt-2 text-sm text-gray-700">
+                    登録済みの通知詳細
+                </p>
+            </div>
 
-        <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
+            <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
+            </div>
         </div>
-    </div>
+    </x-slot>
 
     <div class="flow-root">
 
         <div class="space-y-12 sm:space-y-16">
 
             <dl
-                class="mt-10 space-y-8 border-b border-gray-900/10 pb-12 sm:space-y-0 sm:divide-y sm:divide-gray-900/10 sm:border-t sm:pb-0">
+                class="space-y-8 border-b border-gray-900/10 pb-12 sm:space-y-0 sm:divide-y sm:divide-gray-900/10 sm:pb-0">
 
                 <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6">
 
@@ -78,12 +80,11 @@
                 @csrf
                 @method('delete')
 
-                <button type="submit"
-                    onclick="return confirm('削除してもよろしいですか?')"
+                <button type="submit" onclick="return confirm('削除してもよろしいですか?')"
                     class="inline-flex justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600">Delete</button>
             </form>
 
         </div>
 
     </div>
-</x-layout>
+</x-app-layout>

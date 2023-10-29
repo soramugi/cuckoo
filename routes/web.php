@@ -25,7 +25,6 @@ Route::middleware([
     'verified',
 ])->group(function () {
     Route::get('/', [TopController::class, 'index'])->name('top.index');
-    Route::get('dashboard', [TopController::class, 'dashboard'])->name('dashboard');
 
     Route::resource('reminders', ReminderController::class);
 });
