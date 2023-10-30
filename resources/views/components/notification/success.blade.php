@@ -1,6 +1,6 @@
 <!-- Global notification live region, render this permanently at the end of the document -->
 <div x-data="{ open: true }" x-init="setTimeout(() => open = false, 3000)" aria-live="assertive"
-    class="pointer-events-none fixed inset-0 flex items-end px-4 py-6 sm:items-start sm:mt-14 sm:p-6">
+    class="pointer-events-none fixed inset-0 flex items-end px-4 py-6 sm:items-start sm:mt-14 sm:p-6 z-30">
     <div x-show="open" class="flex w-full flex-col items-center space-y-4 sm:items-end">
         <!--
         Notification panel, dynamically insert this into the live region when it needs to be displayed
