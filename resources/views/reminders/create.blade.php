@@ -135,7 +135,7 @@
                         通知時間
                     </label>
                     <div class="mt-2 sm:col-span-2 sm:mt-0">
-                        <input type="time" name="time" id="time" autocomplete="time" value="{{ old('time') }}"
+                        <input type="time" name="time" id="time" autocomplete="time" value="{{ old('time') ?? now()->format('H:i') }}"
                             class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
                     </div>
                 </div>
@@ -145,7 +145,7 @@
                         通知の送信先メールアドレス
                     </label>
                     <div class="mt-2 sm:col-span-2 sm:mt-0">
-                        <input id="to" name="to" type="email" autocomplete="to" value="{{ old('to') }}"
+                        <input id="to" name="to" type="email" autocomplete="to" value="{{ old('to') ?? Auth::user()->email }}"
                             class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-md sm:text-sm sm:leading-6">
                     </div>
                 </div>
