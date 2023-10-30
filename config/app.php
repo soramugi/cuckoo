@@ -5,6 +5,8 @@ use Illuminate\Support\ServiceProvider;
 
 return [
 
+    'setup' => env('APP_SETUP', false),
+
     /*
     |--------------------------------------------------------------------------
     | Application Name

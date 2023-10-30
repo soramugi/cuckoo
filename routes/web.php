@@ -19,6 +19,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('setup', [SetupController::class, 'create'])->name('setup.create');
 Route::post('setup', [SetupController::class, 'store'])->name('setup.store');
 
+Route::get('setup/user', [SetupController::class, 'userCreate'])->name('setup.user.create');
+Route::post('setup/user', [SetupController::class, 'userStore'])->name('setup.user.store');
+
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
