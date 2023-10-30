@@ -34,7 +34,7 @@ class ReminderController extends Controller
     {
         $request->validate([
             'title' => 'required|string',
-            'description' => 'required|string',
+            'description' => 'nullable|string',
             'time' => 'required',
             'to' => 'required|email',
             'type' => 'required',
@@ -82,7 +82,7 @@ class ReminderController extends Controller
     {
         $request->validate([
             'title' => 'required|string',
-            'description' => 'required|string',
+            'description' => 'nullable|string',
             'time' => 'required',
             'to' => 'required|email',
             'type' => 'required',
