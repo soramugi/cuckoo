@@ -124,7 +124,17 @@ class ReminderController extends Controller
 
     public function import(Request $request)
     {
-        // TODO: jsonの取り込みに対応
-        return back();
+        $file = $request->file('json');
+        $content = file_get_contents($file->getRealPath());
+        $json = json_decode($content);
+
+        foreach ($json as $obj) {
+            $data = (array) $obj;
+            unset($data['id']);
+            $data['compleded_at'] = now();
+            Reminder::create($data);
+        }
+
+        return back()->with('success', 'インポートデータの登録が完了しました');
     }
 }

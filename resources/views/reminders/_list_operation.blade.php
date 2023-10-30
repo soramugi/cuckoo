@@ -19,18 +19,19 @@
             class="absolute right-0 z-10 -mr-1 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
             role="menu" aria-orientation="vertical" aria-labelledby="option-menu-button" tabindex="-1">
             <div class="py-1" role="none">
-                <a href="{{ route('reminders.export') }}" class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-50" role="menuitem"
-                    tabindex="-1" id="option-menu-item-0">
+                <a href="{{ route('reminders.export') }}" class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-50"
+                    role="menuitem" tabindex="-1" id="option-menu-item-0">
                     登録データのエクスポート
                 </a>
-                <form method="POST" action="{{ route('reminders.import') }}" class="block text-gray-700 px-4 py-2 text-sm hover:bg-gray-50" x-data>
+
+                <form method="POST" action="{{ route('reminders.import') }}" class="block" name="import"
+                    enctype="multipart/form-data">
                     @csrf
 
-                    {{-- TODO: ファイル選択でアップロード --}}
-                    <button type="submit" role="menuitem" class="w-full" tabindex="-1"
-                        id="option-menu-item-1">
-                        インポート
-                    </button>
+                    <label for="import" class="block text-gray-700 px-4 py-2 text-sm hover:bg-gray-50">
+                        <span>インポート</span>
+                        <input id="import" name="json" type="file" class="sr-only" onchange="document.import.submit()">
+                    </label>
                 </form>
 
             </div>
