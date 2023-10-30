@@ -8,11 +8,14 @@
                     設定済みの通知一覧
                 </p>
             </div>
-            <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
+            <div class="flex gap-x-4 justify-end mt-4 sm:ml-16 sm:mt-0">
                 <a href="{{ route('reminders.create') }}"
                     class="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
                     追加
                 </a>
+
+                @include('reminders._list_operation')
+
             </div>
         </div>
     </x-slot>

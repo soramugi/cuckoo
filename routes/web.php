@@ -29,5 +29,7 @@ Route::middleware([
 ])->group(function () {
     Route::get('/', [TopController::class, 'index'])->name('top.index');
 
+    Route::get('reminders/json/export', [ReminderController::class, 'export'])->name('reminders.export');
+    Route::post('reminders/json/import', [ReminderController::class, 'import'])->name('reminders.import');
     Route::resource('reminders', ReminderController::class);
 });

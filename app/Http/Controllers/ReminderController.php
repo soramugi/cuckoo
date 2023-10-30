@@ -112,4 +112,19 @@ class ReminderController extends Controller
 
         return redirect()->to(route('reminders.index'))->with('success', '削除が完了しました');
     }
+
+    public function export(Request $request)
+    {
+        return response(Reminder::all()->toJson())
+            ->withHeaders([
+                'Content-Type' => 'application/force-download',
+                'Content-Disposition' => 'attachment; filename="data.json"',
+            ]);
+    }
+
+    public function import(Request $request)
+    {
+        // TODO: jsonの取り込みに対応
+        return back();
+    }
 }
