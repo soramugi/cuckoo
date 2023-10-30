@@ -25,6 +25,10 @@ class Reminder extends Model
         'compleded_at',
     ];
 
+    protected $casts = [
+        'compleded_at' => 'datetime',
+    ];
+
     protected function repeatText(): Attribute
     {
         return Attribute::make(
@@ -54,13 +58,13 @@ class Reminder extends Model
                 $date->minute = $min;
                 if (! is_null($attributes['week'])) {
                     $date->weekday($attributes['week']);
-                    if (! is_null($attributes['compleded_at']) && $date < $attributes['compleded_at']) {
+                    if ($date < $attributes['updated_at']) {
                         $date->addWeek();
                     }
                 }
                 if (! is_null($attributes['day'])) {
                     $date->day = $attributes['day'];
-                    if (! is_null($attributes['compleded_at']) && $date < $attributes['compleded_at']) {
+                    if ($date < $attributes['updated_at']) {
                         $date->addMonth();
                     }
                 }

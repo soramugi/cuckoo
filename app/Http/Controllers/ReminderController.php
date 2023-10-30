@@ -48,7 +48,6 @@ class ReminderController extends Controller
         } else {
             $data = array_merge($data, $request->only('week'));
         }
-        $data = array_merge($data, ['compleded_at' => now()]);
 
         Reminder::create($data);
 
@@ -96,7 +95,6 @@ class ReminderController extends Controller
         } else {
             $data = array_merge($data, $request->only('week'));
         }
-        $data = array_merge($data, ['compleded_at' => now()]);
 
         $reminder->update($data);
 
@@ -131,7 +129,7 @@ class ReminderController extends Controller
         foreach ($json as $obj) {
             $data = (array) $obj;
             unset($data['id']);
-            $data['compleded_at'] = now();
+            unset($data['compleded_at']);
             Reminder::create($data);
         }
 
