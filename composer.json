@@ -47,6 +47,13 @@
         ],
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
+        ],
+        "test": [
+            "@php artisan optimize:clear",
+            "@php ./vendor/bin/pint --test",
+            "@php -r \"file_exists('database/database_testing.sqlite') || touch('database/database_testing.sqlite');\"",
+            "@php artisan migrate --env=testing",
+            "@php artisan test"
         ]
     },
     "extra": {
