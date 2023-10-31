@@ -1,7 +1,7 @@
 <!-- Global notification live region, render this permanently at the end of the document -->
-<div x-data="{ open: true }" x-init="setTimeout(() => open = false, 3000)" aria-live="assertive"
+<div x-data="{ notificationOpen: true }" x-init="setTimeout(() => notificationOpen = false, 3000)" aria-live="assertive"
     class="pointer-events-none fixed inset-0 flex items-end px-4 py-6 sm:items-start sm:mt-14 sm:p-6 z-30">
-    <div x-show="open" class="flex w-full flex-col items-center space-y-4 sm:items-end">
+    <div x-show="notificationOpen" class="flex w-full flex-col items-center space-y-4 sm:items-end">
         <!--
         Notification panel, dynamically insert this into the live region when it needs to be displayed
   
@@ -30,7 +30,7 @@
                         {{-- <p class="mt-1 text-sm text-gray-500">Anyone with a link can now view this file.</p> --}}
                     </div>
                     <div class="ml-4 flex flex-shrink-0">
-                        <button type="button" @click="open = false"
+                        <button type="button" @click="notificationOpen = false"
                             class="inline-flex rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
                             <span class="sr-only">Close</span>
                             <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">

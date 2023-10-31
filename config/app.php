@@ -6,6 +6,7 @@ use Illuminate\Support\ServiceProvider;
 return [
 
     'setup' => env('APP_SETUP', false),
+    'php_binary' => env('APP_PHP_BINARY', ''),
 
     /*
     |--------------------------------------------------------------------------
