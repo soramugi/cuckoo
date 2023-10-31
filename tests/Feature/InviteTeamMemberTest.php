@@ -15,7 +15,10 @@ class InviteTeamMemberTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_team_members_can_be_invited_to_team(): void
+    /**
+     * @test
+     */
+    public function 作成済みユーザーのチーム招待(): void
     {
         if (! Features::sendsTeamInvitations()) {
             $this->markTestSkipped('Team invitations not enabled.');
@@ -26,6 +29,10 @@ class InviteTeamMemberTest extends TestCase
         Mail::fake();
 
         $this->actingAs($user = User::factory()->withPersonalTeam()->create());
+
+        User::factory()->create([
+            'email' => 'test@example.com',
+        ]);
 
         $component = Livewire::test(TeamMemberManager::class, ['team' => $user->currentTeam])
             ->set('addTeamMemberForm', [
