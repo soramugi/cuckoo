@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ReminderController;
+use App\Http\Controllers\SettingController;
 use App\Http\Controllers\SetupController;
 use App\Http\Controllers\TopController;
 use Illuminate\Support\Facades\Route;
@@ -28,6 +29,8 @@ Route::middleware([
     'verified',
 ])->group(function () {
     Route::get('/', [TopController::class, 'index'])->name('top.index');
+    Route::get('settings', [SettingController::class, 'edit'])->name('setting.edit');
+    Route::post('settings', [SettingController::class, 'update'])->name('setting.update');
 
     Route::get('reminders/json/export', [ReminderController::class, 'export'])->name('reminders.export');
     Route::post('reminders/json/import', [ReminderController::class, 'import'])->name('reminders.import');
