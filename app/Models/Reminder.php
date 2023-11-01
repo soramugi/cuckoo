@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Laravel\Jetstream\Jetstream;
 
 class Reminder extends Model
 {
@@ -23,11 +25,20 @@ class Reminder extends Model
         'once',
 
         'compleded_at',
+        'team_id',
     ];
 
     protected $casts = [
         'compleded_at' => 'datetime',
     ];
+
+    /**
+     * Get the team that the invitation belongs to.
+     */
+    public function team(): BelongsTo
+    {
+        return $this->belongsTo(Jetstream::teamModel());
+    }
 
     protected function repeatText(): Attribute
     {

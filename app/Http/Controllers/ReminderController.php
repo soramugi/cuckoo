@@ -4,15 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Models\Reminder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ReminderController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $reminders = Reminder::query()->paginate();
+        $reminders = Reminder::query()
+            ->where('team_id', Auth::user()->currentTeam->id)
+            ->paginate();
 
         return view('reminders.index', [
             'reminders' => $reminders,
@@ -48,6 +51,9 @@ class ReminderController extends Controller
         } else {
             $data = array_merge($data, $request->only('week'));
         }
+        $data = array_merge($data, [
+            'team_id' => Auth::user()->currentTeam->id,
+        ]);
 
         Reminder::create($data);
 
@@ -59,6 +65,19 @@ class ReminderController extends Controller
      */
     public function show(Reminder $reminder)
     {
+        $reminder->load(['team']);
+
+        $valid = true;
+        foreach (Auth::user()->allTeams() as $team) {
+            if ($reminder->team->id === $team->id) {
+                $valid = false;
+                Auth::user()->switchTeam($team);
+            }
+        }
+        if ($valid) {
+            return abort(403);
+        }
+
         return view('reminders.show', [
             'reminder' => $reminder,
         ]);
@@ -69,6 +88,10 @@ class ReminderController extends Controller
      */
     public function edit(Reminder $reminder)
     {
+        if (! Auth::user()->isCurrentTeam($reminder->team)) {
+            return abort(403);
+        }
+
         return view('reminders.edit', [
             'reminder' => $reminder,
         ]);
@@ -79,6 +102,10 @@ class ReminderController extends Controller
      */
     public function update(Request $request, Reminder $reminder)
     {
+        if (! Auth::user()->isCurrentTeam($reminder->team)) {
+            return abort(403);
+        }
+
         $request->validate([
             'title' => 'required|string',
             'description' => 'nullable|string',
@@ -106,6 +133,10 @@ class ReminderController extends Controller
      */
     public function destroy(Reminder $reminder)
     {
+        if (! Auth::user()->isCurrentTeam($reminder->team)) {
+            return abort(403);
+        }
+
         $reminder->delete();
 
         return redirect()->to(route('reminders.index'))->with('success', '削除が完了しました');
@@ -113,7 +144,12 @@ class ReminderController extends Controller
 
     public function export(Request $request)
     {
-        return response(Reminder::all()->toJson())
+        $json = Reminder::query()
+            ->where('team_id', Auth::user()->currentTeam->id)
+            ->get()
+            ->toJson();
+
+        return response($json)
             ->withHeaders([
                 'Content-Type' => 'application/force-download',
                 'Content-Disposition' => 'attachment; filename="data.json"',
@@ -130,6 +166,8 @@ class ReminderController extends Controller
             $data = (array) $obj;
             unset($data['id']);
             unset($data['compleded_at']);
+            $data['team_id'] = Auth::user()->currentTeam->id;
+
             Reminder::create($data);
         }
 
