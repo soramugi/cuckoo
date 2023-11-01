@@ -14,15 +14,18 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('reminders', function (Blueprint $table) {
-            $table->foreignId('team_id')->nullable();
+            $table->foreignId('team_id')->index()->nullable();
         });
 
         $team = DB::table('teams')->first();
-        Reminder::query()->update(['team_id' => $team->id]);
+        if ($team) {
+            Reminder::query()->update(['team_id' => $team->id]);
+        }
 
-        Schema::table('reminders', function (Blueprint $table) {
-            $table->foreignId('team_id')->index()->nullable(false)->change();
-        });
+        // sqliteの環境によっては nullable の解除ができなかったので非対応
+        // Schema::table('reminders', function (Blueprint $table) {
+        //     $table->foreignId('team_id')->index()->nullable(false)->change();
+        // });
     }
 
     /**
