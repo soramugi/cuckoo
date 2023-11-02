@@ -1,6 +1,6 @@
 <p align="center">
-<a href="https://cuckooremind.com" target="_blank" style="font-size: 2rem;">
-CuckooRemind
+<a href="https://cuckooremind.com" target="_blank">
+<img src="https://raw.githubusercontent.com/soramugi/cuckooremind/main/resources/images/logo.png" width="400" />
 </a>
 </p>
 
