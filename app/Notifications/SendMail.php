@@ -36,7 +36,7 @@ class SendMail extends Notification
     {
         return (new MailMessage)
             ->subject($this->reminder->title)
-            ->greeting('通知内容をお知らせします')
+            ->greeting($this->reminder->title)
             ->line($this->reminder->description)
             ->action('通知詳細', route('reminders.show', [$this->reminder]))
             ->salutation('よろしくお願いします。'.config('app.name'));
