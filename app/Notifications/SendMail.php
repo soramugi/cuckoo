@@ -34,12 +34,23 @@ class SendMail extends Notification
      */
     public function toMail(object $notifiable): MailMessage
     {
-        return (new MailMessage)
+        $message = (new MailMessage)
             ->subject($this->reminder->title)
             ->greeting($this->reminder->title)
             ->line($this->reminder->description)
             ->action('通知詳細', route('reminders.show', [$this->reminder]))
-            ->salutation('よろしくお願いします。'.config('app.name'));
+            ->salutation(implode(
+                [
+                    '登録内容からリマインドメールを送信しました。',
+                    '解除したい場合には詳細から変更してください。',
+                    config('app.name'),
+                ]
+            ));
+        $message->viewData = [
+            'nothingHeader' => true,
+        ];
+
+        return $message;
     }
 
     /**
@@ -49,8 +60,6 @@ class SendMail extends Notification
      */
     public function toArray(object $notifiable): array
     {
-        return [
-            //
-        ];
+        return [];
     }
 }

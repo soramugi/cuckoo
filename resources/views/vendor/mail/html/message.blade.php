@@ -1,8 +1,11 @@
 <x-mail::layout>
+
 {{-- Header --}}
 <x-slot:header>
 <x-mail::header :url="config('app.url')">
+@if(!$nothingHeader)
 {{ config('app.name') }}
+@endif
 </x-mail::header>
 </x-slot:header>
 
