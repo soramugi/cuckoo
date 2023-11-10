@@ -34,10 +34,12 @@ class SendMail extends Notification
      */
     public function toMail(object $notifiable): MailMessage
     {
+        $desc = str_replace(["\r\n", "\r", "\n"], "\n", $this->reminder->description);
+        $descs = explode("\n", $desc);
         $message = (new MailMessage)
             ->subject($this->reminder->title)
             ->greeting($this->reminder->title)
-            ->line($this->reminder->description)
+            ->lines($descs)
             ->action('通知詳細', route('reminders.show', [$this->reminder]))
             ->salutation(implode(
                 [
