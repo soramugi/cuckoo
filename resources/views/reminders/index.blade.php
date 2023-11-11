@@ -65,6 +65,10 @@
                         @endforeach
                     </tbody>
                 </table>
+
+                <div class="mt-6">
+                    {{ $reminders->links() }}
+                </div>
             </div>
         </div>
     </div>
