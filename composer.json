@@ -1,8 +1,11 @@
 {
-    "name": "laravel/laravel",
+    "name": "soramugi/cuckooremind",
     "type": "project",
-    "description": "The skeleton application for the Laravel framework.",
-    "keywords": ["laravel", "framework"],
+    "description": "セルフホスティング型の通知アプリケーション",
+    "keywords": [
+        "notification",
+        "reminder"
+    ],
     "license": "MIT",
     "require": {
         "php": "^8.2",
@@ -28,7 +31,10 @@
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
-        }
+        },
+        "files": [
+            "app/Helpers.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {
