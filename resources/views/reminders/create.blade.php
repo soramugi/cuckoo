@@ -93,7 +93,7 @@
                                                 class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
 
                                                 @foreach (range(1, 31) as $day)
-                                                <option value="{{ $day }}" @if(old('day')==$day) selected @endif>
+                                                <option value="{{ $day }}" @if(old('day', now()->day)==$day) selected @endif>
                                                     {{ $day }}
                                                 </option>
                                                 @endforeach
@@ -115,7 +115,7 @@
                                                 class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
 
                                                 @foreach (['日', '月', '火', '水', '木', '金', '土'] as $i => $week)
-                                                <option value="{{ $i }}" @if(old('week')==$i) selected @endif>
+                                                <option value="{{ $i }}" @if(old('week', now()->dayOfWeek)==$i) selected @endif>
                                                     {{ $week }}
                                                 </option>
                                                 @endforeach
@@ -135,7 +135,7 @@
                         通知時間
                     </label>
                     <div class="mt-2 sm:col-span-2 sm:mt-0">
-                        <input type="time" name="time" id="time" autocomplete="time" value="{{ old('time') ?? now()->format('H:i') }}"
+                        <input type="time" name="time" id="time" autocomplete="time" value="{{ old('time') ?? now()->sub('1 minute')->format('H:i') }}"
                             class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
                     </div>
                 </div>
