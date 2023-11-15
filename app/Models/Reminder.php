@@ -19,7 +19,7 @@ class Reminder extends Model
         'time',
         'to',
 
-        'type', // TODO: 定数化する & 毎月がdayで設定してしまっているので変更
+        'type', // TODO: 定数化する
 
         'compleded_at',
         'team_id',
@@ -49,7 +49,7 @@ class Reminder extends Model
 
                     return '毎週'.$weeks[(int) $value].'曜日';
                 }
-                if ($key === 'day') {
+                if ($key === 'month') {
                     return '毎月'.$value.'日';
                 }
 
@@ -77,7 +77,7 @@ class Reminder extends Model
                         $date->addWeek();
                     }
                 }
-                if ($key === 'day') {
+                if ($key === 'month') {
                     $date->day = (int) $value;
                     if ($date < $attributes['updated_at']) {
                         $date->addMonth();

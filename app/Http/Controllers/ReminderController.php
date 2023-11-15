@@ -41,15 +41,15 @@ class ReminderController extends Controller
             'time' => 'required',
             'to' => 'required|email',
             'type_mode' => 'required',
-            'day' => 'required_if:type_mode,day',
+            'month' => 'required_if:type_mode,month',
             'week' => 'required_if:type_mode,week',
         ]);
 
         $data = $request->only(['title', 'description', 'time', 'to']);
         $type = $request->get('type_mode').':';
 
-        if ($request->get('type_mode') === 'day') {
-            $type .= $request->get('day');
+        if ($request->get('type_mode') === 'month') {
+            $type .= $request->get('month');
         } elseif ($request->get('type_mode') === 'week') {
             $type .= $request->get('week');
         }
@@ -115,7 +115,7 @@ class ReminderController extends Controller
             'time' => 'required',
             'to' => 'required|email',
             'type_mode' => 'required',
-            'day' => 'required_if:type_mode,day',
+            'month' => 'required_if:type_mode,month',
             'week' => 'required_if:type_mode,week',
         ]);
 
@@ -123,8 +123,8 @@ class ReminderController extends Controller
 
         $type = $request->get('type_mode').':';
 
-        if ($request->get('type_mode') === 'day') {
-            $type .= $request->get('day');
+        if ($request->get('type_mode') === 'month') {
+            $type .= $request->get('month');
         } elseif ($request->get('type_mode') === 'week') {
             $type .= $request->get('week');
         }

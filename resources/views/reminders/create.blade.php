@@ -68,7 +68,7 @@
                     </div>
                 </div>
 
-                <fieldset x-data="{ type_mode: '{{ old('type_mode', 'day') }}' }">
+                <fieldset x-data="{ type_mode: '{{ old('type_mode', 'month') }}' }">
                     <legend class="sr-only">通知頻度</legend>
                     <div class="sm:grid sm:grid-cols-3 sm:items-baseline sm:gap-4 sm:py-6">
                         <div class="text-sm font-medium leading-6 text-gray-900" aria-hidden="true">
@@ -85,22 +85,22 @@
                                         <select x-model="type_mode" id="type_mode" name="type_mode"
                                             class="block rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
 
-                                            @foreach (['day' => '毎月', 'week' => '毎週'] as $mode => $value)
-                                            <option value="{{ $mode }}" @if(old('type_mode', 'day')==$mode) selected
+                                            @foreach (['month' => '毎月', 'week' => '毎週'] as $mode => $value)
+                                            <option value="{{ $mode }}" @if(old('type_mode', 'month')==$mode) selected
                                                 @endif>
                                                 {{ $value }}
                                             </option>
                                             @endforeach
                                         </select>
 
-                                        <div x-show="type_mode === 'day'" class="flex items-center gap-x-3">
-                                            <select id="day" name="day" autocomplete="day"
+                                        <div x-show="type_mode === 'month'" class="flex items-center gap-x-3">
+                                            <select id="month" name="month" autocomplete="month"
                                                 class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
 
-                                                @foreach (range(1, 31) as $day)
-                                                <option value="{{ $day }}" @if(old('day', now()->day)==$day) selected
+                                                @foreach (range(1, 31) as $monthDay)
+                                                <option value="{{ $monthDay }}" @if(old('month', now()->day)==$monthDay) selected
                                                     @endif>
-                                                    {{ $day }}
+                                                    {{ $monthDay }}
                                                 </option>
                                                 @endforeach
                                             </select>

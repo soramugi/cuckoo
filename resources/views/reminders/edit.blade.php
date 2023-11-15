@@ -1,10 +1,10 @@
 @php
-$type_day = null;
+$type_month = null;
 $type_week = null;
 [$type_mode, $type_value] = explode(':', $reminder->type);
 
-if ($type_mode === 'day') {
-$type_day = (int)$type_value;
+if ($type_mode === 'month') {
+$type_month = (int)$type_value;
 }
 if ($type_mode === 'week') {
 $type_week = (int)$type_value;
@@ -99,7 +99,7 @@ $type_week = (int)$type_value;
                                         <select x-model="type_mode" id="type_mode" name="type_mode"
                                             class="block rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
 
-                                            @foreach (['day' => '毎月', 'week' => '毎週'] as $mode => $value)
+                                            @foreach (['month' => '毎月', 'week' => '毎週'] as $mode => $value)
                                             <option value="{{ $mode }}" @if(old('type_mode', $type_mode)==$mode)
                                                 selected @endif>
                                                 {{ $value }}
@@ -107,14 +107,14 @@ $type_week = (int)$type_value;
                                             @endforeach
                                         </select>
 
-                                        <div x-show="type_mode === 'day'" class="flex items-center gap-x-3">
-                                            <select id="day" name="day" autocomplete="day"
+                                        <div x-show="type_mode === 'month'" class="flex items-center gap-x-3">
+                                            <select id="month" name="month" autocomplete="month"
                                                 class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
 
-                                                @foreach (range(1, 31) as $day)
-                                                <option value="{{ $day }}" @if(old('day', $type_day)==$day) selected
+                                                @foreach (range(1, 31) as $monthDay)
+                                                <option value="{{ $monthDay }}" @if(old('month', $type_month)==$monthDay) selected
                                                     @endif>
-                                                    {{ $day }}
+                                                    {{ $monthDay }}
                                                 </option>
                                                 @endforeach
                                             </select>
