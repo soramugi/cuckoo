@@ -44,6 +44,10 @@ class Reminder extends Model
                 $type = $attributes['type'];
                 [$key, $value] = explode(':', $type);
 
+                if ($key === 'day') {
+                    return '毎日';
+                }
+
                 if ($key === 'week') {
                     $weeks = ['日', '月', '火', '水', '木', '金', '土'];
 
@@ -71,6 +75,11 @@ class Reminder extends Model
                 $type = $attributes['type'];
                 [$key, $value] = explode(':', $type);
 
+                if ($key === 'day') {
+                    if ($date < $attributes['updated_at']) {
+                        $date->addDay();
+                    }
+                }
                 if ($key === 'week') {
                     $date->weekday((int) $value);
                     if ($date < $attributes['updated_at']) {
