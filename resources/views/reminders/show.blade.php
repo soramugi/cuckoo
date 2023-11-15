@@ -41,7 +41,7 @@
 
                 <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6">
 
-                    <dt class="text-sm font-medium leading-6 text-gray-900 sm:pt-1.5">繰り返しタイプ</dt>
+                    <dt class="text-sm font-medium leading-6 text-gray-900 sm:pt-1.5">通知頻度</dt>
                     <dd class="mt-2 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
                         {{ $reminder->repeat_text }}
                     </dd>

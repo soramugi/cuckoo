@@ -4,10 +4,10 @@ $type_week = null;
 [$type_mode, $type_value] = explode(':', $reminder->type);
 
 if ($type_mode === 'day') {
-    $type_day = (int)$type_value;
+$type_day = (int)$type_value;
 }
 if ($type_mode === 'week') {
-    $type_week = (int)$type_value;
+$type_week = (int)$type_value;
 }
 @endphp
 
@@ -83,10 +83,10 @@ if ($type_mode === 'week') {
                 </div>
 
                 <fieldset x-data="{ type_mode: '{{ old('type_mode', $type_mode) }}' }">
-                    <legend class="sr-only">繰り返しタイプ</legend>
+                    <legend class="sr-only">通知頻度</legend>
                     <div class="sm:grid sm:grid-cols-3 sm:items-baseline sm:gap-4 sm:py-6">
                         <div class="text-sm font-medium leading-6 text-gray-900" aria-hidden="true">
-                            繰り返しタイプ
+                            通知頻度
                         </div>
                         <div class="mt-1 sm:col-span-2 sm:mt-0">
                             <div class="max-w-lg">
@@ -95,34 +95,31 @@ if ($type_mode === 'week') {
                                 </p>
                                 <div class="space-y-6">
                                     <div class="flex items-center gap-x-3">
-                                        <input x-model="type_mode" id="type-day" name="type_mode" type="radio" value="day"
-                                            class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600">
-                                        <label for="type-day"
-                                            class="block text-sm font-medium leading-6 text-gray-900">
-                                            毎月
-                                        </label>
+
+                                        <select x-model="type_mode" id="type_mode" name="type_mode"
+                                            class="block rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
+
+                                            @foreach (['day' => '毎月', 'week' => '毎週'] as $mode => $value)
+                                            <option value="{{ $mode }}" @if(old('type_mode', $type_mode)==$mode)
+                                                selected @endif>
+                                                {{ $value }}
+                                            </option>
+                                            @endforeach
+                                        </select>
 
                                         <div x-show="type_mode === 'day'" class="flex items-center gap-x-3">
                                             <select id="day" name="day" autocomplete="day"
                                                 class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
 
                                                 @foreach (range(1, 31) as $day)
-                                                <option value="{{ $day }}" @if(old('day', $type_day)==$day)
-                                                    selected @endif>
+                                                <option value="{{ $day }}" @if(old('day', $type_day)==$day) selected
+                                                    @endif>
                                                     {{ $day }}
                                                 </option>
                                                 @endforeach
                                             </select>
                                             日
                                         </div>
-                                    </div>
-                                    <div class="flex items-center gap-x-3">
-                                        <input x-model="type_mode" id="type-week" name="type_mode" type="radio" value="week"
-                                            class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600">
-                                        <label for="type-week"
-                                            class="block text-sm font-medium leading-6 text-gray-900">
-                                            毎週
-                                        </label>
 
                                         <div x-show="type_mode === 'week'"
                                             class="flex items-center gap-x-3 whitespace-nowrap">

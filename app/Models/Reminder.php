@@ -19,7 +19,7 @@ class Reminder extends Model
         'time',
         'to',
 
-        'type',
+        'type', // TODO: 定数化する & 毎月がdayで設定してしまっているので変更
 
         'compleded_at',
         'team_id',

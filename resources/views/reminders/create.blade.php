@@ -69,45 +69,43 @@
                 </div>
 
                 <fieldset x-data="{ type_mode: '{{ old('type_mode', 'day') }}' }">
-                    <legend class="sr-only">繰り返しタイプ</legend>
+                    <legend class="sr-only">通知頻度</legend>
                     <div class="sm:grid sm:grid-cols-3 sm:items-baseline sm:gap-4 sm:py-6">
                         <div class="text-sm font-medium leading-6 text-gray-900" aria-hidden="true">
-                            繰り返しタイプ
+                            通知頻度
                         </div>
                         <div class="mt-1 sm:col-span-2 sm:mt-0">
                             <div class="max-w-lg">
                                 <p class="text-sm leading-6 text-gray-600">
-
                                 </p>
+
                                 <div class="space-y-6">
                                     <div class="flex items-center gap-x-3">
-                                        <input x-model="type_mode" id="type-day" name="type_mode" type="radio" value="day"
-                                            class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600">
-                                        <label for="type-day"
-                                            class="block text-sm font-medium leading-6 text-gray-900">
-                                            毎月
-                                        </label>
+
+                                        <select x-model="type_mode" id="type_mode" name="type_mode"
+                                            class="block rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
+
+                                            @foreach (['day' => '毎月', 'week' => '毎週'] as $mode => $value)
+                                            <option value="{{ $mode }}" @if(old('type_mode', 'day')==$mode) selected
+                                                @endif>
+                                                {{ $value }}
+                                            </option>
+                                            @endforeach
+                                        </select>
 
                                         <div x-show="type_mode === 'day'" class="flex items-center gap-x-3">
                                             <select id="day" name="day" autocomplete="day"
                                                 class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
 
                                                 @foreach (range(1, 31) as $day)
-                                                <option value="{{ $day }}" @if(old('day', now()->day)==$day) selected @endif>
+                                                <option value="{{ $day }}" @if(old('day', now()->day)==$day) selected
+                                                    @endif>
                                                     {{ $day }}
                                                 </option>
                                                 @endforeach
                                             </select>
                                             日
                                         </div>
-                                    </div>
-                                    <div class="flex items-center gap-x-3">
-                                        <input x-model="type_mode" id="type-week" name="type_mode" type="radio" value="week"
-                                            class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600">
-                                        <label for="type-week"
-                                            class="block text-sm font-medium leading-6 text-gray-900">
-                                            毎週
-                                        </label>
 
                                         <div x-show="type_mode === 'week'"
                                             class="flex items-center gap-x-3 whitespace-nowrap">
@@ -115,7 +113,8 @@
                                                 class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
 
                                                 @foreach (['日', '月', '火', '水', '木', '金', '土'] as $i => $week)
-                                                <option value="{{ $i }}" @if(old('week', now()->dayOfWeek)==$i) selected @endif>
+                                                <option value="{{ $i }}" @if(old('week', now()->dayOfWeek)==$i) selected
+                                                    @endif>
                                                     {{ $week }}
                                                 </option>
                                                 @endforeach
@@ -135,7 +134,8 @@
                         通知時間
                     </label>
                     <div class="mt-2 sm:col-span-2 sm:mt-0">
-                        <input type="time" name="time" id="time" autocomplete="time" value="{{ old('time') ?? now()->sub('1 minute')->format('H:i') }}"
+                        <input type="time" name="time" id="time" autocomplete="time"
+                            value="{{ old('time') ?? now()->sub('1 minute')->format('H:i') }}"
                             class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
                     </div>
                 </div>
@@ -145,7 +145,8 @@
                         通知の送信先メールアドレス
                     </label>
                     <div class="mt-2 sm:col-span-2 sm:mt-0">
-                        <input id="to" name="to" type="email" autocomplete="to" value="{{ old('to') ?? Auth::user()->email }}"
+                        <input id="to" name="to" type="email" autocomplete="to"
+                            value="{{ old('to') ?? Auth::user()->email }}"
                             class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-md sm:text-sm sm:leading-6">
                     </div>
                 </div>
