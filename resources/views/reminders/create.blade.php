@@ -68,7 +68,7 @@
                     </div>
                 </div>
 
-                <fieldset x-data="{ type: '{{ old('type', 'month') }}' }">
+                <fieldset x-data="{ type_mode: '{{ old('type_mode', 'day') }}' }">
                     <legend class="sr-only">繰り返しタイプ</legend>
                     <div class="sm:grid sm:grid-cols-3 sm:items-baseline sm:gap-4 sm:py-6">
                         <div class="text-sm font-medium leading-6 text-gray-900" aria-hidden="true">
@@ -81,14 +81,14 @@
                                 </p>
                                 <div class="space-y-6">
                                     <div class="flex items-center gap-x-3">
-                                        <input x-model="type" id="type-month" name="type" type="radio" value="month"
+                                        <input x-model="type_mode" id="type-day" name="type_mode" type="radio" value="day"
                                             class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600">
-                                        <label for="type-month"
+                                        <label for="type-day"
                                             class="block text-sm font-medium leading-6 text-gray-900">
                                             毎月
                                         </label>
 
-                                        <div x-show="type === 'month'" class="flex items-center gap-x-3">
+                                        <div x-show="type_mode === 'day'" class="flex items-center gap-x-3">
                                             <select id="day" name="day" autocomplete="day"
                                                 class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
 
@@ -102,14 +102,14 @@
                                         </div>
                                     </div>
                                     <div class="flex items-center gap-x-3">
-                                        <input x-model="type" id="type-week" name="type" type="radio" value="week"
+                                        <input x-model="type_mode" id="type-week" name="type_mode" type="radio" value="week"
                                             class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600">
                                         <label for="type-week"
                                             class="block text-sm font-medium leading-6 text-gray-900">
                                             毎週
                                         </label>
 
-                                        <div x-show="type === 'week'"
+                                        <div x-show="type_mode === 'week'"
                                             class="flex items-center gap-x-3 whitespace-nowrap">
                                             <select id="week" name="week" autocomplete="week"
                                                 class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">

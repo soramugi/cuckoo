@@ -40,18 +40,21 @@ class ReminderController extends Controller
             'description' => 'nullable|string',
             'time' => 'required',
             'to' => 'required|email',
-            'type' => 'required',
-            'day' => 'required_if:type,month',
-            'week' => 'required_if:type,week',
+            'type_mode' => 'required',
+            'day' => 'required_if:type_mode,day',
+            'week' => 'required_if:type_mode,week',
         ]);
 
         $data = $request->only(['title', 'description', 'time', 'to']);
-        if ($request->get('type') === 'month') {
-            $data = array_merge($data, $request->only('day'));
-        } else {
-            $data = array_merge($data, $request->only('week'));
+        $type = $request->get('type_mode').':';
+
+        if ($request->get('type_mode') === 'day') {
+            $type .= $request->get('day');
+        } elseif ($request->get('type_mode') === 'week') {
+            $type .= $request->get('week');
         }
         $data = array_merge($data, [
+            'type' => $type,
             'team_id' => Auth::user()->currentTeam->id,
         ]);
 
@@ -111,17 +114,23 @@ class ReminderController extends Controller
             'description' => 'nullable|string',
             'time' => 'required',
             'to' => 'required|email',
-            'type' => 'required',
-            'day' => 'required_if:type,month',
-            'week' => 'required_if:type,week',
+            'type_mode' => 'required',
+            'day' => 'required_if:type_mode,day',
+            'week' => 'required_if:type_mode,week',
         ]);
 
         $data = $request->only(['title', 'description', 'time', 'to']);
-        if ($request->get('type') === 'month') {
-            $data = array_merge($data, $request->only('day'));
-        } else {
-            $data = array_merge($data, $request->only('week'));
+
+        $type = $request->get('type_mode').':';
+
+        if ($request->get('type_mode') === 'day') {
+            $type .= $request->get('day');
+        } elseif ($request->get('type_mode') === 'week') {
+            $type .= $request->get('week');
         }
+        $data = array_merge($data, [
+            'type' => $type,
+        ]);
 
         $reminder->update($data);
 

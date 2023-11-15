@@ -19,10 +19,7 @@ class Reminder extends Model
         'time',
         'to',
 
-        'day',
-        'week',
-
-        'once',
+        'type',
 
         'compleded_at',
         'team_id',
@@ -44,16 +41,19 @@ class Reminder extends Model
     {
         return Attribute::make(
             get: function (mixed $value, array $attributes) {
-                if (! is_null($attributes['week'])) {
+                $type = $attributes['type'];
+                [$key, $value] = explode(':', $type);
+
+                if ($key === 'week') {
                     $weeks = ['日', '月', '火', '水', '木', '金', '土'];
 
-                    return '毎週'.$weeks[$attributes['week']].'曜日';
+                    return '毎週'.$weeks[(int) $value].'曜日';
                 }
-                if (! is_null($attributes['day'])) {
-                    return '毎月'.$attributes['day'].'日';
+                if ($key === 'day') {
+                    return '毎月'.$value.'日';
                 }
 
-                return $attributes['day'];
+                return $type;
             },
         );
     }
@@ -67,14 +67,18 @@ class Reminder extends Model
                 $date = now();
                 $date->hour = $hour;
                 $date->minute = $min;
-                if (! is_null($attributes['week'])) {
-                    $date->weekday($attributes['week']);
+
+                $type = $attributes['type'];
+                [$key, $value] = explode(':', $type);
+
+                if ($key === 'week') {
+                    $date->weekday((int) $value);
                     if ($date < $attributes['updated_at']) {
                         $date->addWeek();
                     }
                 }
-                if (! is_null($attributes['day'])) {
-                    $date->day = $attributes['day'];
+                if ($key === 'day') {
+                    $date->day = (int) $value;
                     if ($date < $attributes['updated_at']) {
                         $date->addMonth();
                     }
