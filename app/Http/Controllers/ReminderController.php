@@ -51,7 +51,7 @@ class ReminderController extends Controller
         if ($request->get('type_mode') === 'month') {
             $type .= $request->get('month');
         } elseif ($request->get('type_mode') === 'week') {
-            $type .= $request->get('week');
+            $type .= implode(',', $request->get('week'));
         }
         $data = array_merge($data, [
             'type' => $type,
@@ -126,7 +126,7 @@ class ReminderController extends Controller
         if ($request->get('type_mode') === 'month') {
             $type .= $request->get('month');
         } elseif ($request->get('type_mode') === 'week') {
-            $type .= $request->get('week');
+            $type .= implode(',', $request->get('week'));
         }
         $data = array_merge($data, [
             'type' => $type,

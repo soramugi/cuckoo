@@ -109,17 +109,23 @@
 
                                         <div x-show="type_mode === 'week'"
                                             class="flex items-center gap-x-3 whitespace-nowrap">
-                                            <select id="week" name="week" autocomplete="week"
-                                                class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
 
-                                                @foreach (['日', '月', '火', '水', '木', '金', '土'] as $i => $week)
-                                                <option value="{{ $i }}" @if(old('week', now()->dayOfWeek)==$i) selected
-                                                    @endif>
-                                                    {{ $week }}
-                                                </option>
-                                                @endforeach
-                                            </select>
-                                            曜日
+                                            @foreach (['日', '月', '火', '水', '木', '金', '土'] as $i => $week)
+
+                                            <div class="relative flex items-start">
+                                                <div class="flex h-6 items-center">
+                                                  <input id="{{ $week }}"
+                                                  value="{{ $i }}"
+                                                  name="week[]"
+                                                  @checked(in_array($i, old('week', [now()->dayOfWeek])))
+                                                  type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600">
+                                                </div>
+                                                <div class="ml-3 text-sm leading-6">
+                                                  <label for="{{ $week }}" class="font-medium text-gray-900">{{ $week }}</label>
+                                                </div>
+                                              </div>
+
+                                            @endforeach
                                         </div>
 
                                     </div>

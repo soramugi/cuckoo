@@ -50,8 +50,14 @@ class Reminder extends Model
 
                 if ($key === 'week') {
                     $weeks = ['日', '月', '火', '水', '木', '金', '土'];
+                    $nums = explode(',', $value);
 
-                    return '毎週'.$weeks[(int) $value].'曜日';
+                    $array = [];
+                    foreach ($nums as $num) {
+                        $array[] = $weeks[(int) $num];
+                    }
+
+                    return '毎週'.implode(',', $array).'曜日';
                 }
                 if ($key === 'month') {
                     return '毎月'.$value.'日';
@@ -81,10 +87,17 @@ class Reminder extends Model
                     }
                 }
                 if ($key === 'week') {
-                    $date->weekday((int) $value);
-                    if ($date < $attributes['updated_at']) {
-                        $date->addWeek();
+                    $nums = explode(',', $value);
+                    $array = [];
+                    foreach ($nums as $num) {
+                        $copyDate = $date->clone();
+                        $copyDate->weekday((int) $num);
+                        if ($copyDate < $attributes['updated_at']) {
+                            $copyDate->addWeek();
+                        }
+                        $array[] = $copyDate;
                     }
+                    $date = collect($array)->min();
                 }
                 if ($key === 'month') {
                     $date->day = (int) $value;
