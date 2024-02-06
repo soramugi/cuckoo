@@ -7,10 +7,10 @@
     RewriteEngine on
 
     RewriteCond %{REQUEST_URI} /s/
-    RewriteRule ^s/(.*)$ storage/app/public/$1 [L,END]
+    RewriteRule ^s/(.*)$ storage/app/public/$1 [L]
 
     RewriteCond %{REQUEST_URI} !/s/
     RewriteCond %{REQUEST_URI} !/public/
-    RewriteRule ^(.*)$ public/$1 [L,END]
+    RewriteRule ^(.*)$ public/$1 [L]
 
 </IfModule>
