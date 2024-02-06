@@ -67,7 +67,7 @@
                 </table>
 
                 <div class="mt-6">
-                    {{ $reminders->links() }}
+                    {{ $reminders->appends(request()->query())->links() }}
                 </div>
             </div>
         </div>

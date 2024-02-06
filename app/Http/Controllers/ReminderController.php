@@ -13,9 +13,17 @@ class ReminderController extends Controller
      */
     public function index(Request $request)
     {
-        $reminders = Reminder::query()
-            ->where('team_id', Auth::user()->currentTeam->id)
-            ->paginate();
+        $model = Reminder::query()
+            ->where('team_id', Auth::user()->currentTeam->id);
+
+        if ($search = $request->input('search')) {
+            $model->where(function ($query) use ($search) {
+                $query->where('title', 'LIKE', '%'.$search.'%')
+                    ->orWhere('description', 'LIKE', '%'.$search.'%');
+            });
+        }
+
+        $reminders = $model->paginate();
 
         return view('reminders.index', [
             'reminders' => $reminders,
