@@ -2,7 +2,7 @@
 /node_modules
 /public/build
 /public/hot
-/public/s/
+/public/s
 /storage/*.key
 /storage/*.sqlite
 /vendor
