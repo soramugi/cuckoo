@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Carbon;
 use Laravel\Jetstream\Jetstream;
 
 class Reminder extends Model
@@ -62,6 +63,11 @@ class Reminder extends Model
                 if ($key === 'month') {
                     return '毎月'.$value.'日';
                 }
+                if ($key === 'once') {
+                    $date = now()->createFromFormat('Y-m-d', $value);
+
+                    return $date->format('Y年m月d日');
+                }
 
                 return $type;
             },
@@ -103,6 +109,15 @@ class Reminder extends Model
                     $date->day = (int) $value;
                     if ($date < $attributes['updated_at']) {
                         $date->addMonth();
+                    }
+                }
+                if ($key === 'once') {
+                    $date = Carbon::createFromFormat('Y-m-d', $value);
+                    $date->hour = $hour;
+                    $date->minute = $min;
+                    $date->second = 0;
+                    if ($date <= $attributes['compleded_at']) {
+                        return null;
                     }
                 }
 

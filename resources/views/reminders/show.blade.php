@@ -72,7 +72,7 @@
 
                     <dt class="text-sm font-medium leading-6 text-gray-900 sm:pt-1.5">次回通知時間</dt>
                     <dd class="mt-2 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                        {{ $reminder->next_send->format('Y-m-d H:i') }}
+                        {{ $reminder->next_send?->format('Y-m-d H:i') ?? '完了' }}
                     </dd>
 
                 </div>

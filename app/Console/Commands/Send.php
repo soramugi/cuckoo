@@ -32,6 +32,9 @@ class Send extends Command
         $now->second(0);
         Reminder::query()->chunkById(100, function ($reminders) use ($now) {
             foreach ($reminders as $reminder) {
+                if (! $reminder->next_send) {
+                    continue;
+                }
                 if ($now < $reminder->next_send) {
                     continue;
                 }

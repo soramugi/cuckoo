@@ -51,6 +51,7 @@ class ReminderController extends Controller
             'type_mode' => 'required',
             'month' => 'required_if:type_mode,month',
             'week' => 'required_if:type_mode,week',
+            'once' => 'required_if:type_mode,once',
         ]);
 
         $data = $request->only(['title', 'description', 'time', 'to']);
@@ -60,6 +61,8 @@ class ReminderController extends Controller
             $type .= $request->get('month');
         } elseif ($request->get('type_mode') === 'week') {
             $type .= implode(',', $request->get('week'));
+        } elseif ($request->get('type_mode') === 'once') {
+            $type .= $request->get('once');
         }
         $data = array_merge($data, [
             'type' => $type,
@@ -125,6 +128,7 @@ class ReminderController extends Controller
             'type_mode' => 'required',
             'month' => 'required_if:type_mode,month',
             'week' => 'required_if:type_mode,week',
+            'once' => 'required_if:type_mode,once',
         ]);
 
         $data = $request->only(['title', 'description', 'time', 'to']);
@@ -135,6 +139,8 @@ class ReminderController extends Controller
             $type .= $request->get('month');
         } elseif ($request->get('type_mode') === 'week') {
             $type .= implode(',', $request->get('week'));
+        } elseif ($request->get('type_mode') === 'once') {
+            $type .= $request->get('once');
         }
         $data = array_merge($data, [
             'type' => $type,

@@ -1,6 +1,7 @@
 @php
 $type_month = null;
 $type_weeks = [];
+$type_once = '';
 [$type_mode, $type_value] = explode(':', $reminder->type);
 
 if ($type_mode === 'month') {
@@ -12,6 +13,9 @@ $type_weeks = array_map(function ($i) {
     },
     explode(',', $type_value)
 );
+}
+if ($type_mode === 'once') {
+$type_once = $type_value;
 }
 @endphp
 
@@ -103,7 +107,7 @@ $type_weeks = array_map(function ($i) {
                                         <select x-model="type_mode" id="type_mode" name="type_mode"
                                             class="block rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
 
-                                            @foreach (['month' => '毎月', 'week' => '毎週', 'day' => '毎日'] as $mode => $value)
+                                            @foreach (['month' => '毎月', 'week' => '毎週', 'day' => '毎日', 'once' => '一回'] as $mode => $value)
                                             <option value="{{ $mode }}" @if(old('type_mode', $type_mode)==$mode)
                                                 selected @endif>
                                                 {{ $value }}
@@ -144,6 +148,17 @@ $type_weeks = array_map(function ($i) {
                                               </div>
 
                                             @endforeach
+                                        </div>
+
+                                        <div x-show="type_mode === 'once'"
+                                        class="flex items-center gap-x-3 whitespace-nowrap">
+
+                                            <div class="mt-2 sm:col-span-2 sm:mt-0">
+                                                <input type="date" name="once" id="once" autocomplete="once"
+                                                    value="{{ old('once', $type_once) ?? now()->add('1 day')->format('Y-m-d') }}"
+                                                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
+                                            </div>
+
                                         </div>
 
                                     </div>
